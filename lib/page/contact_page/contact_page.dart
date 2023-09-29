@@ -35,16 +35,16 @@ class _ContacePageState extends State<ContacePage> {
     setState(() {});
   }
 
-  void addContact() {
-    contactModel.add(ContactModel(
-      name: _nameValue,
-      phone: _phoneValue,
-      umur: "10",
-    ));
-    resetField();
+  // void addContact() {
+  //   contactModel.add(ContactModel(
+  //     name: _nameValue,
+  //     phone: _phoneValue,
+  //     umur: "10",
+  //   ));
+  //   resetField();
 
-    setState(() {});
-  }
+  //   setState(() {});
+  // }
 
   void removeContact(int index) {
     contactModel.removeAt(index);
@@ -56,19 +56,19 @@ class _ContacePageState extends State<ContacePage> {
 
   int selectIndexContact = -1;
 
-  void updateContact(int index) {
-    if (_nameValue.isNotEmpty && _phoneValue.isNotEmpty) {
-      contactModel[index] = ContactModel(
-        name: _nameValue,
-        phone: _phoneValue,
-        umur: "10",
-      );
-      resetField();
+  // void updateContact(int index) {
+  //   if (_nameValue.isNotEmpty && _phoneValue.isNotEmpty) {
+  //     contactModel[index] = ContactModel(
+  //       name: _nameValue,
+  //       phone: _phoneValue,
+  //       umur: "10",
+  //     );
+  //     resetField();
 
-      index = -1;
-      setState(() {});
-    }
-  }
+  //     index = -1;
+  //     setState(() {});
+  //   }
+  // }
 
   void resetField() {
     _nameController.clear();
@@ -132,11 +132,11 @@ class _ContacePageState extends State<ContacePage> {
                   title: 'Submit',
                   onPressed: _nameValue.isNotEmpty && _phoneValue.isNotEmpty
                       ? () {
-                          if (selectIndexContact == -1) {
-                            addContact();
-                          } else {
-                            updateContact(selectIndexContact);
-                          }
+                          // if (selectIndexContact == -1) {
+                          //   addContact();
+                          // } else {
+                          //   updateContact(selectIndexContact);
+                          // }
                         }
                       : null,
                 ),
@@ -205,11 +205,6 @@ class _ContacePageState extends State<ContacePage> {
                                             //       valueDariHalamanDetail;
                                             //   setState(() {});
                                             // }
-                                            Navigator.pushNamed(
-                                              context,
-                                              '/',
-                                              arguments: [],
-                                            );
                                           },
                                           child: const Text('Edit'),
                                         ),

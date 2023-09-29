@@ -1,72 +1,74 @@
 import 'package:contact_app/model/contact_model.dart';
+import 'package:contact_app/provider/button_submit_change_notifier.dart';
 import 'package:contact_app/widget/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DetailContactPage extends StatefulWidget {
-  final ContactModel contactModel;
+class DetailContactArguments {
+  ContactModel contactModel;
 
-  const DetailContactPage({super.key, required this.contactModel});
-
-  @override
-  State<DetailContactPage> createState() => _DetailContactPageState();
+  DetailContactArguments({
+    required this.contactModel,
+  });
 }
 
-class _DetailContactPageState extends State<DetailContactPage> {
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
+class DetailContactPage extends StatelessWidget {
+  DetailContactPage({super.key});
 
-  @override
-  void initState() {
-    nameController.text = widget.contactModel.name;
-    phoneController.text = widget.contactModel.phone;
-    super.initState();
-  }
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.red,
-          leading: IconButton(
-            icon: const Icon(Icons.close),
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as DetailContactArguments;
+
+    nameController.text = arguments.contactModel.name;
+    phoneController.text = arguments.contactModel.phone;
+
+    final buttonSubmitProvider =
+        Provider.of<ButtonSubmitChangeNotifier>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Text('Detail Contact'),
+      ),
+      body: Column(
+        children: [
+          TextFieldWidget(
+            label: 'Name',
+            hintText: 'Insert Your Name',
+            controller: nameController,
+          ),
+          TextFieldWidget(
+            label: 'Nomor',
+            hintText: '+62....',
+            controller: phoneController,
+            textInputType: TextInputType.phone,
+          ),
+          Text(arguments.contactModel.index.toString()),
+          ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
+              buttonSubmitProvider.updateContact(
+                ContactModel(
+                  name: nameController.text,
+                  phone: phoneController.text,
+                  index: arguments.contactModel.index,
+                ),
+                arguments.contactModel.index ?? -1,
+              );
             },
-          ),
-          title: const Text('Detail Contact'),
-        ),
-        body: Column(
-          children: [
-            TextFieldWidget(
-              label: 'Name',
-              hintText: 'Insert Your Name',
-              controller: nameController,
-            ),
-            TextFieldWidget(
-              label: 'Nomor',
-              hintText: '+62....',
-              controller: phoneController,
-              textInputType: TextInputType.phone,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(
-                  context,
-                  ContactModel(
-                    name: nameController.text,
-                    phone: phoneController.text,
-                    isEdited: true,
-                  ),
-                );
-              },
-              child: const Text('Ubah'),
-            )
-          ],
-        ),
+            child: const Text('Ubah'),
+          )
+        ],
       ),
     );
   }

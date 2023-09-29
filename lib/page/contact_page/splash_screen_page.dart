@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:contact_app/page/contact_page/contact_page.dart';
+import 'package:contact_app/page/contact_page/contact_provider_page.dart';
 import 'package:contact_app/page/contact_page/detail_contact_page.dart';
 import 'package:contact_app/page/contact_page/login_page.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (_) => const ContacePage(),
+          builder: (_) => const ContactProviderPage(),
         ),
         (route) => false,
       );
